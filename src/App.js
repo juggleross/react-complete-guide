@@ -8,7 +8,8 @@ class App extends Component {
     persons: [
       {name: 'Vlad', age: 12},
       {name: 'Nik', age: 29}
-    ]
+    ],
+    showPersons: false
   }
 
   changeName = (newName) => {
@@ -29,6 +30,11 @@ class App extends Component {
     })
   }
 
+  showPersonsHandler = () => {
+    let showPersons = this.state.showPersons;
+    this.setState({ showPersons: !showPersons })
+  }
+
   render() {
     const style = {
       backgroundColor: 'red',
@@ -37,9 +43,14 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <button style={style} onClick={() => this.changeName('Name')}>Switch name</button>
-        <Person click={this.changeName.bind(this, 'Max')} name={this.state.persons[0].name} age={this.state.persons[0].age}></Person>
-        <Person change={this.changeNameHandler} name={this.state.persons[1].name} age={this.state.persons[1].age}/>
+        <button style={style} onClick={this.showPersonsHandler}>Switch name</button>
+        { this.state.showPersons ?
+          <div>
+            <Person click={this.changeName.bind(this, 'Max')} name={this.state.persons[0].name} age={this.state.persons[0].age}></Person>
+            <Person change={this.changeNameHandler} name={this.state.persons[1].name} age={this.state.persons[1].age}/>
+          </div>
+          : null
+        }
       </div>
     );
   }
